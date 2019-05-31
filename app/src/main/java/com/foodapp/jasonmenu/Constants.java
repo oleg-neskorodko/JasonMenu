@@ -7,11 +7,5 @@ public class Constants {
     public static String LINK2 = "3e8a01d0ce4a15b64affc55165f2b85e/raw/0dd8efd7b8c4cd58912bd4d54405766b40a3b024/restaurapi2";
     public static String LINK3 = "restaurapi2";
     public static String BASE_URL = "https://gist.githubusercontent.com";
-
-
-
-
-
-
-
+    public static int RECYCLER_SPACE = 20;
 }

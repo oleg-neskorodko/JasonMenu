@@ -7,31 +7,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder>{
+public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> {
 
-    private Context context1;
-    private List<String> symbolList;
-    private View.OnClickListener clickListener;
     private Bundle bundle1;
+    private ButtonClickListener listener;
+    private ArrayList<Integer> amountOrdered;
 
 
-    public FoodsAdapter(Context context1, Bundle bundle1) {
-        this.context1 = context1;
+    public FoodsAdapter(ButtonClickListener listener, Bundle bundle1, ArrayList<Integer> amountOrdered) {
+        this.listener = listener;
         this.bundle1 = bundle1;
-        for (int i = 0; i < 6; i++) {
-            Log.d(MainActivity.TAG, bundle1.getString("first" + i));
-            Log.d(MainActivity.TAG, bundle1.getString("second" + i));
-        }
-
+        this.amountOrdered = amountOrdered;
     }
 
-/*    public void setClickListener(View.OnClickListener callback) {
-        clickListener = callback;
-    }*/
 
     @Override
     public FoodsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -43,25 +37,34 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder>{
                 parent, false);
 
         FoodsAdapter.ViewHolder holder = new FoodsAdapter.ViewHolder(v);
-/*        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickListener.onClick(view);
-            }
-        });*/
+
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(FoodsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(FoodsAdapter.ViewHolder holder, final int position) {
         Log.d(MainActivity.TAG, "FoodsAdapter onBindViewHolder = " + getItemCount());
 
+        holder.nameFoodsTextView.setText(bundle1.getString("name" + position));
+        holder.descriptionTextView.setText(bundle1.getString("description" + position));
+        holder.weightTextView.setText(bundle1.getString("weight" + position));
+        holder.timeTextView.setText(bundle1.getString("time" + position));
+        holder.priceTextView.setText(bundle1.getString("price" + position));
+        holder.amountTextView.setText(String.valueOf(amountOrdered.get(position)));
 
-        holder.textView1.setText(bundle1.getString("first" + position));
-        holder.textView2.setText(bundle1.getString("second" + position));
+        holder.plusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onButtonClick(v, position);
+            }
+        });
 
-
-
+        holder.minusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onButtonClick(v, position);
+            }
+        });
     }
 
     @Override
@@ -72,18 +75,25 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder>{
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView1;
-        TextView textView2;
-
-
+        TextView nameFoodsTextView;
+        TextView descriptionTextView;
+        TextView weightTextView;
+        TextView timeTextView;
+        TextView priceTextView;
+        TextView amountTextView;
+        Button plusButton;
+        Button minusButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            textView1 = itemView.findViewById(R.id.textView1);
-            textView2 = itemView.findViewById(R.id.textView2);
+            nameFoodsTextView = itemView.findViewById(R.id.nameFoodsTextView);
+            descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
+            weightTextView = itemView.findViewById(R.id.weightTextView);
+            timeTextView = itemView.findViewById(R.id.timeTextView);
+            priceTextView = itemView.findViewById(R.id.priceTextView);
+            amountTextView = itemView.findViewById(R.id.amountTextView);
+            plusButton = itemView.findViewById(R.id.plusButton);
+            minusButton = itemView.findViewById(R.id.minusButton);
         }
     }
-
-
-
 }

@@ -2,22 +2,115 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:background="@drawable/rounded"
+    android:orientation="horizontal"
+    android:padding="10dp">
 
-    <TextView
-        android:id="@+id/textView1"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="?android:attr/textColorPrimary" />
+        android:layout_weight="10"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nameFoodsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp" />
 
 
-    <TextView
-        android:id="@+id/textView2"
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:id="@+id/iv1"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:paddingRight="5dp"
+                android:src="@drawable/scales01" />
+
+            <TextView
+                android:id="@+id/weightTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="20dp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/iv2"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:paddingRight="5dp"
+                android:src="@drawable/clock01" />
+
+            <TextView
+                android:id="@+id/timeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="20dp"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/iv3"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:paddingRight="5dp"
+                android:src="@drawable/money01" />
+
+            <TextView
+                android:id="@+id/priceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="?android:attr/textColorPrimary" />
+        android:layout_weight="1"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:paddingTop="5dp">
 
+        <Button
+            android:id="@+id/plusButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="+"/>
 
+        <TextView
+            android:id="@+id/amountTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:text="0"/>
 
+        <Button
+            android:id="@+id/minusButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="-"/>
+
+    </LinearLayout>
 
 </LinearLayout>

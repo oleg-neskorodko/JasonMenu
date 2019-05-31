@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 
@@ -13,7 +14,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     private Context context1;
     private List<MenuModel> posts;
-    private List<String> posts2;
     private View.OnClickListener clickListener;
 
     public MenuAdapter(Context context1, List<MenuModel> posts) {
@@ -49,11 +49,11 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     public void onBindViewHolder(MenuAdapter.ViewHolder holder, int position) {
         Log.d(MainActivity.TAG, "onBindViewHolder post size = " + getItemCount());
 
-        //holder.nameMenuTextView.setText(posts2.get(position));
 
 
         holder.nameMenuTextView.setText(posts.get(position).getName());
-        holder.numberMenuTextView.setText(posts.get(position).getFoods().size());
+        holder.numberMenuTextView.setText(String.valueOf(posts.get(position).getFoods().size()));
+        holder.menuImageView.setImageDrawable(context1.getDrawable(R.drawable.salad02));
 
     }
 
@@ -67,11 +67,13 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView nameMenuTextView;
         TextView numberMenuTextView;
+        ImageView menuImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             nameMenuTextView = itemView.findViewById(R.id.nameMenuTextView);
             numberMenuTextView = itemView.findViewById(R.id.numberMenuTextView);
+            menuImageView = itemView.findViewById(R.id.menuImageView);
         }
     }
 }

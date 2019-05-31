@@ -21,11 +21,8 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         menuFragment = new MenuFragment();
         menuFragment.setListener(this);
         if (savedInstanceState == null) {
-            //listFragment.setArguments(mainDataSet);
             getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, menuFragment, "menu_fragment").addToBackStack("main_stack").commit();
-            //Log.d(TAG, "MA fragment launch");
         } else {
-            //mainDataSet = savedInstanceState.getBundle("mainDataSet");
             MenuFragment fragment = (MenuFragment) getSupportFragmentManager().findFragmentByTag("menu_fragment");
             if (fragment != null) {
                 fragment.setListener(this);
@@ -35,12 +32,7 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
     }
 
     @Override
-    public void onItemClick(String str) {
-
-    }
-
-    @Override
-    public void onTextClick(Bundle bundle) {
+    public void onItemClick(Bundle bundle) {
         FoodsFragment foodsFragment = new FoodsFragment();
         foodsFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
