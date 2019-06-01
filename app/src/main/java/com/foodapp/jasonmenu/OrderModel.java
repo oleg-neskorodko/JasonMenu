@@ -23,9 +23,22 @@ public class OrderModel {
         @SerializedName("price")
         @Expose
         private String price;
+    @SerializedName("description")
+    @Expose
+    private String description;
         @SerializedName("amount")
         @Expose
         private Integer amount;
+
+        public void setParams(Integer id, String name, String weight, String time, String price, String description, Integer amount) {
+            this.id = id;
+            this.name = name;
+            this.weight = weight;
+            this.time = time;
+            this.price = price;
+            this.description = description;
+            this.amount = amount;
+        }
 
         public Integer getId() {
             return id;
@@ -59,13 +72,21 @@ public class OrderModel {
             this.time = time;
         }
 
-        public String getPrice() {
-            return price;
+        public String getDescription() {
+            return description;
         }
 
-        public void setPrice(String price) {
-            this.price = price;
+        public void setDescription(String price) {
+            this.description = description;
         }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
 
         public Integer getAmount() {
             return amount;

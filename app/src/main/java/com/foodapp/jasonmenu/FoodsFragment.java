@@ -22,6 +22,7 @@ public class FoodsFragment extends Fragment {
     private FoodsAdapter adapter;
     private Bundle bundle;
     private ArrayList<Integer> amountOrdered;
+    private ArrayList<OrderModel> orderList;
     //private SharedPreferences sPref;
 
 
@@ -36,6 +37,7 @@ public class FoodsFragment extends Fragment {
 
         bundle = this.getArguments();
         amountOrdered = new ArrayList<>();
+        orderList = new ArrayList<>();
         for (int i = 0; i < bundle.getInt("bundle_size"); i++) {
             amountOrdered.add(i, 0);
         }
@@ -43,21 +45,34 @@ public class FoodsFragment extends Fragment {
         if (bundle != null) {
             Log.d(MainActivity.TAG, "FoodsFragment bundle NOT NULL");
 
+            for (int i = 0; i < bundle.getInt("bundle_size"); i++) {
+                orderList.add(new OrderModel());
+                orderList.get(i).setParams(bundle.getInt("id" + i),
+                        bundle.getString("name" + i),
+                        bundle.getString("weight" + i),
+                        bundle.getString("time" + i),
+                        bundle.getString("price" + i),
+                        bundle.getString("description" + i),
+                        0);
+            }
+            Log.d(MainActivity.TAG, "params = " + orderList.get(0).getName());
+
+
             layoutManager = new LinearLayoutManager(getActivity());
             adapter = new FoodsAdapter(new ButtonClickListener() {
 
                 @Override
-                public void onButtonClick(View v, int position) {
+                public void onButtonClick(View v, int id) {
                     switch (v.getId()) {
                         case R.id.plusButton:
-                            Log.d(MainActivity.TAG, "PLUS" + position + " " + amountOrdered.size());
-                            amountOrdered.set(position, (amountOrdered.get(position) + 1));
+                            Log.d(MainActivity.TAG, "PLUS" + id + " " + amountOrdered.size());
+                            amountOrdered.set(id, (amountOrdered.get(id) + 1));
                             recyclerView.getAdapter().notifyDataSetChanged();
                             break;
                         case R.id.minusButton:
-                            Log.d(MainActivity.TAG, "MINUS" + position);
-                            if (amountOrdered.get(position) != 0) {
-                                amountOrdered.set(position, (amountOrdered.get(position) - 1));
+                            Log.d(MainActivity.TAG, "MINUS" + id);
+                            if (amountOrdered.get(id) != 0) {
+                                amountOrdered.set(id, (amountOrdered.get(id) - 1));
                                 recyclerView.getAdapter().notifyDataSetChanged();
                             }
 
@@ -66,7 +81,7 @@ public class FoodsFragment extends Fragment {
                     }
                 }
 
-            }, bundle, amountOrdered);
+            }, orderList, amountOrdered);
 
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);

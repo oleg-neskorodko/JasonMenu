@@ -18,11 +18,12 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> 
     private Bundle bundle1;
     private ButtonClickListener listener;
     private ArrayList<Integer> amountOrdered;
+    private ArrayList<OrderModel> orderList;
 
 
-    public FoodsAdapter(ButtonClickListener listener, Bundle bundle1, ArrayList<Integer> amountOrdered) {
+    public FoodsAdapter(ButtonClickListener listener, ArrayList<OrderModel> orderList, ArrayList<Integer> amountOrdered) {
         this.listener = listener;
-        this.bundle1 = bundle1;
+        this.orderList = orderList;
         this.amountOrdered = amountOrdered;
     }
 
@@ -45,24 +46,24 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> 
     public void onBindViewHolder(FoodsAdapter.ViewHolder holder, final int position) {
         Log.d(MainActivity.TAG, "FoodsAdapter onBindViewHolder = " + getItemCount());
 
-        holder.nameFoodsTextView.setText(bundle1.getString("name" + position));
-        holder.descriptionTextView.setText(bundle1.getString("description" + position));
-        holder.weightTextView.setText(bundle1.getString("weight" + position));
-        holder.timeTextView.setText(bundle1.getString("time" + position));
-        holder.priceTextView.setText(bundle1.getString("price" + position));
+        holder.nameFoodsTextView.setText(orderList.get(position).getName());
+        holder.descriptionTextView.setText(orderList.get(position).getDescription());
+        holder.weightTextView.setText(orderList.get(position).getWeight());
+        holder.timeTextView.setText(orderList.get(position).getTime());
+        holder.priceTextView.setText(orderList.get(position).getPrice());
         holder.amountTextView.setText(String.valueOf(amountOrdered.get(position)));
 
         holder.plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onButtonClick(v, position);
+                listener.onButtonClick(v, orderList.get(position).getId());
             }
         });
 
         holder.minusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onButtonClick(v, position);
+                listener.onButtonClick(v, orderList.get(position).getId());
             }
         });
     }
