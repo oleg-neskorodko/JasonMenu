@@ -25,6 +25,7 @@ public class TimerFragment extends Fragment {
     private ItemClickListener listener;
     private final int STATUS_NONE = 0;
     private final int REFRESH = 1;
+    private boolean handlerON;
 
 
     public void setListener(ItemClickListener listener) {
@@ -39,6 +40,7 @@ public class TimerFragment extends Fragment {
         Log.d(MainActivity.TAG, "TimerFragment onCreateView");
 
         timeTimerTextView = v.findViewById(R.id.timeTimerTextView);
+        handlerON = true;
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -47,10 +49,19 @@ public class TimerFragment extends Fragment {
         Log.d(MainActivity.TAG, "TimerFragment time = " + time);
 
         seconds = time * 60;
-        timeTimerTextView.setText(sdf1.format(seconds * 1000L));
 
 
         return v;
+    }
+
+    public static String getStringWithMillis(int millis) {
+        return String.format("%02d:%02d:%02d",
+                TimeUnit.MILLISECONDS.toHours(millis)
+                        % TimeUnit.HOURS.toHours(1),
+                TimeUnit.MILLISECONDS.toMinutes(millis)
+                % TimeUnit.HOURS.toMinutes(1),
+                TimeUnit.MILLISECONDS.toSeconds(millis)
+                % TimeUnit.MINUTES.toSeconds(1));
     }
 
     @Override
@@ -63,7 +74,8 @@ public class TimerFragment extends Fragment {
                     case STATUS_NONE:
                         break;
                     case REFRESH:
-                        timeTimerTextView.setText(sdf1.format(seconds * 1000L));
+                        //timeTimerTextView.setText(sdf1.format(seconds * 1000L));
+                        timeTimerTextView.setText(getStringWithMillis(seconds*1000));
                         seconds--;
                         break;
                 }
@@ -75,10 +87,14 @@ public class TimerFragment extends Fragment {
             public void run() {
                 try {
                     for (int i = 0; i < time * 60; i++) {
+                        if (!handlerON) break;
                         TimeUnit.MILLISECONDS.sleep(1000);
                         handler.sendEmptyMessage(REFRESH);
                     }
-                    listener.onTimerOut();
+                    if (handlerON) {
+                        listener.onTimerOut();
+                    }
+                    handlerON = false;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -87,5 +103,11 @@ public class TimerFragment extends Fragment {
 
         thread1.start();
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        handlerON = false;
     }
 }

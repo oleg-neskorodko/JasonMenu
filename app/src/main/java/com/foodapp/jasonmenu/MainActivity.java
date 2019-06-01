@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         foodsFragment = new FoodsFragment();
         foodsFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, foodsFragment, "foodsFragment").addToBackStack("mainStack").commit();
+                .replace(R.id.content_frame, foodsFragment, "foodsFragment").addToBackStack("main_stack").commit();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         orderFragment = new OrderFragment();
         orderFragment.setListener(this);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, orderFragment, "orderFragment").addToBackStack("mainStack").commit();
+                .replace(R.id.content_frame, orderFragment, "orderFragment").addToBackStack("main_stack").commit();
     }
 
     @Override
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         timerFragment.setArguments(bundle);
         timerFragment.setListener(this);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, timerFragment, "timerFragment").addToBackStack("mainStack").commit();
+                .replace(R.id.content_frame, timerFragment, "timerFragment").addToBackStack("main_stack").commit();
     }
 
     @Override
