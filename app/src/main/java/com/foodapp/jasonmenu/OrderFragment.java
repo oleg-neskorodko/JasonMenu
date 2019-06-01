@@ -12,17 +12,38 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrderFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
+    private ItemClickListener listener;
     private OrderAdapter adapter;
-    private ArrayList<Integer> amountOrdered;
-    //private SharedPreferences sPref;
+    private SharedPreferences sPref;
+    private ArrayList<OrderModel> totalList;
+    private TextView numberOrderTextView;
+    private TextView timeOrderTextView;
+    private TextView priceOrderTextView;
+    private Button confirmOrderButton;
+    private Button clearOrderButton;
+    private int amount;
+    private int time;
+    private int price;
+
+    public void setListener(ItemClickListener listener) {
+        this.listener = listener;
+    }
 
 
     @Nullable
@@ -33,66 +54,130 @@ public class OrderFragment extends Fragment {
         Log.d(MainActivity.TAG, "OrderFragment onCreateView");
 
         recyclerView = v.findViewById(R.id.recycler_view);
+        numberOrderTextView = v.findViewById(R.id.numberOrderTextView);
+        timeOrderTextView = v.findViewById(R.id.timeOrderTextView);
+        priceOrderTextView = v.findViewById(R.id.priceOrderTextView);
+        confirmOrderButton = v.findViewById(R.id.confirmOrderButton);
+        clearOrderButton = v.findViewById(R.id.clearOrderButton);
 
 
-        amountOrdered = new ArrayList<>();
 
 
         layoutManager = new LinearLayoutManager(getActivity());
 
 
-        SharedPreferences sPref = getActivity().getSharedPreferences("Order", getActivity().MODE_PRIVATE);
-        Log.d(MainActivity.TAG, "mark1");
-        int orderSize = sPref.getInt("order_size", 0);
-        Log.d(MainActivity.TAG, "mark2");
-        ArrayList<Integer> orderIds = new ArrayList<>();
-        ArrayList<Integer> orderAmount = new ArrayList<>();
-        Log.d(MainActivity.TAG, "mark3 = " + orderSize);
-        for (int i = 0; i < orderSize; i++) {
-            orderIds.set(i, sPref.getInt(("food_id" + i), 0));
-            orderAmount.set(i, sPref.getInt(("food_id" + i), 0));
-            Log.d(MainActivity.TAG, "order" + orderIds.get(i) + orderAmount.get(i));
-        }
+        sPref = getActivity().getSharedPreferences("Order", getActivity().MODE_PRIVATE);
+        totalList = new ArrayList<>();
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<OrderModel>>(){}.getType();
+        Log.d(MainActivity.TAG, "input = " + sPref.getString("order", "[]"));
+        totalList = gson.fromJson(sPref.getString("order", "[]"), listType);
+
+        countVariables();
 
 
 
-/*            adapter = new FoodsAdapter(new ButtonClickListener() {
+            adapter = new OrderAdapter(new ButtonClickListener() {
 
                 @Override
                 public void onButtonClick(View v, int position) {
                     switch (v.getId()) {
-                        case R.id.plusButton:
-                            Log.d(MainActivity.TAG, "PLUS" + position + " " + amountOrdered.size());
-                            amountOrdered.set(position, (amountOrdered.get(position) + 1));
+                        case R.id.plusOrderItemButton:
+                            Log.d(MainActivity.TAG, "PLUS" + position);
+                            totalList.get(position).setAmount(totalList.get(position).getAmount() + 1);
                             recyclerView.getAdapter().notifyDataSetChanged();
+                            countVariables();
                             break;
-                        case R.id.minusButton:
+                        case R.id.minusOrderItemButton:
                             Log.d(MainActivity.TAG, "MINUS" + position);
-                            if (amountOrdered.get(position) != 0) {
-                                amountOrdered.set(position, (amountOrdered.get(position) - 1));
+                            if (totalList.get(position).getAmount() != 0) {
+                                totalList.get(position).setAmount(totalList.get(position).getAmount() - 1);
                                 recyclerView.getAdapter().notifyDataSetChanged();
                             }
-
                             break;
 
                     }
                 }
 
-            }, bundle, amountOrdered);*/
+            }, totalList);
 
-        //recyclerView.setLayoutManager(layoutManager);
-        //recyclerView.setAdapter(adapter);
-        //recyclerView.addItemDecoration(new SpaceItemDecoration(Constants.RECYCLER_SPACE));
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new SpaceItemDecoration(Constants.RECYCLER_SPACE));
+
+        confirmOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(MainActivity.TAG, "confirm button" + time);
+                if (time !=0) {
+                    listener.onConfirmButtonClick(time);
+                }
+            }
+        });
+
+        clearOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(MainActivity.TAG, "clear button");
+                totalList.clear();
+                sPref = getActivity().getSharedPreferences("Order", getActivity().MODE_PRIVATE);
+                SharedPreferences.Editor ed = sPref.edit();
+                ed.putString("order", "[]");
+                ed.commit();
+                recyclerView.getAdapter().notifyDataSetChanged();
+                numberOrderTextView.setText(String.valueOf(amount = 0));
+                timeOrderTextView.setText(String.valueOf(time = 0));
+                priceOrderTextView.setText(String.valueOf(price = 0));
+            }
+        });
 
 
         return v;
+    }
+
+    public void countVariables() {
+        amount = 0;
+        time = 0;
+        price = 0;
+
+        amount = totalList.size();
+        for (int i = 0; i < totalList.size(); i++) {
+            if (time < Integer.parseInt(totalList.get(i).getTime())) {
+                time = Integer.parseInt(totalList.get(i).getTime());
+            }
+            price += (Integer.parseInt(totalList.get(i).getPrice()) * totalList.get(i).getAmount());
+        }
+
+        numberOrderTextView.setText(String.valueOf(amount));
+        timeOrderTextView.setText(String.valueOf(time));
+        priceOrderTextView.setText(String.valueOf(price));
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
+        for (int i = 0; i < totalList.size(); i++) {
+            if (totalList.get(i).getAmount() == 0) {
+                totalList.remove(i);
+            }
+        }
 
+
+        Map<Integer, OrderModel> totalMap = new HashMap<>();
+        for (int i = 0; i < totalList.size(); i++) {
+            totalMap.put(totalList.get(i).getId(), totalList.get(i));
+        }
+        Log.d(MainActivity.TAG, "map = " + totalMap.values());
+
+        sPref = getActivity().getSharedPreferences("Order", getActivity().MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(totalMap.values());
+        ed.putString("order",json);
+        ed.commit();
+        Log.d(MainActivity.TAG, "order:\n" + json);
     }
 
     private class SpaceItemDecoration extends RecyclerView.ItemDecoration {

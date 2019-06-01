@@ -15,16 +15,13 @@ import java.util.List;
 
 public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> {
 
-    private Bundle bundle1;
     private ButtonClickListener listener;
-    private ArrayList<Integer> amountOrdered;
     private ArrayList<OrderModel> orderList;
 
 
-    public FoodsAdapter(ButtonClickListener listener, ArrayList<OrderModel> orderList, ArrayList<Integer> amountOrdered) {
+    public FoodsAdapter(ButtonClickListener listener, ArrayList<OrderModel> orderList) {
         this.listener = listener;
         this.orderList = orderList;
-        this.amountOrdered = amountOrdered;
     }
 
 
@@ -51,28 +48,28 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> 
         holder.weightTextView.setText(orderList.get(position).getWeight());
         holder.timeTextView.setText(orderList.get(position).getTime());
         holder.priceTextView.setText(orderList.get(position).getPrice());
-        holder.amountTextView.setText(String.valueOf(amountOrdered.get(position)));
+        holder.amountTextView.setText(String.valueOf(orderList.get(position).getAmount()));
 
         holder.plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onButtonClick(v, orderList.get(position).getId());
+                listener.onButtonClick(v, position);
             }
         });
 
         holder.minusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onButtonClick(v, orderList.get(position).getId());
+                listener.onButtonClick(v, position);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        if (bundle1 == null)
+        if (orderList == null)
             return 0;
-        return bundle1.getInt("bundle_size");
+        return orderList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

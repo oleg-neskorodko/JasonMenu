@@ -13,15 +13,15 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/nameFoodsTextView"
+            android:id="@+id/nameOrderItemTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?android:attr/textColorPrimary"
+            android:textColor="@color/myGreen1"
             android:textSize="18sp" />
 
 
         <TextView
-            android:id="@+id/descriptionTextView"
+            android:id="@+id/descriptionOrderItemTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="?android:attr/textColorPrimary"
@@ -41,7 +41,7 @@
                 android:src="@drawable/scales01" />
 
             <TextView
-                android:id="@+id/weightTextView"
+                android:id="@+id/weightOrderItemTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="20dp"
@@ -56,7 +56,7 @@
                 android:src="@drawable/clock01" />
 
             <TextView
-                android:id="@+id/timeTextView"
+                android:id="@+id/timeOrderItemTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="20dp"
@@ -71,7 +71,7 @@
                 android:src="@drawable/money01" />
 
             <TextView
-                android:id="@+id/priceTextView"
+                android:id="@+id/priceOrderItemTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="?android:attr/textColorPrimary"
@@ -84,19 +84,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:padding="10dp"
+        android:paddingHorizontal="10dp"
         android:orientation="vertical"
         android:paddingTop="5dp">
 
         <Button
-            android:id="@+id/plusButton"
+            android:id="@+id/plusOrderItemButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:text="+"/>
 
         <TextView
-            android:id="@+id/amountTextView"
+            android:id="@+id/amountOrderItemTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="?android:attr/textColorPrimary"
@@ -105,7 +105,7 @@
             android:text="0"/>
 
         <Button
-            android:id="@+id/minusButton"
+            android:id="@+id/minusOrderItemButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"

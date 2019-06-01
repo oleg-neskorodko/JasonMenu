@@ -31,8 +31,12 @@ public class MenuFragment extends Fragment {
     private MenuAdapter adapter;
     private ItemClickListener listener;
     private List<MenuModel> posts;
-    private TextView numberFragTextView;
     private LinearLayout orderLayout;
+    private SharedPreferences sPref;
+    private ArrayList<OrderModel> totalList;
+    private TextView itemsMenuTextView;
+    private TextView timeMenuTextView;
+    private TextView priceMenuTextView;
 
 
 
@@ -50,6 +54,9 @@ public class MenuFragment extends Fragment {
 
 
         orderLayout = v.findViewById(R.id.orderLayout);
+        itemsMenuTextView = v.findViewById(R.id.itemsMenuTextView);
+        timeMenuTextView = v.findViewById(R.id.timeMenuTextView);
+        priceMenuTextView = v.findViewById(R.id.priceMenuTextView);
         orderLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,9 +65,28 @@ public class MenuFragment extends Fragment {
         });
 
 
-        numberFragTextView = v.findViewById(R.id.numberFragTextView);
-        SharedPreferences sPref = getActivity().getSharedPreferences("sPref", getActivity().MODE_PRIVATE);
-        numberFragTextView.setText(String.valueOf(sPref.getInt("order_size", 0)));
+        sPref = getActivity().getSharedPreferences("Order", getActivity().MODE_PRIVATE);
+        totalList = new ArrayList<>();
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<OrderModel>>(){}.getType();
+        Log.d(MainActivity.TAG, "input = " + sPref.getString("order", "[]"));
+        totalList = gson.fromJson(sPref.getString("order", "[]"), listType);
+
+        int amount = 0;
+        int time = 0;
+        int price = 0;
+
+        amount = totalList.size();
+        for (int i = 0; i < totalList.size(); i++) {
+            if (time < Integer.parseInt(totalList.get(i).getTime())) {
+                time = Integer.parseInt(totalList.get(i).getTime());
+            }
+            price += (Integer.parseInt(totalList.get(i).getPrice()) * totalList.get(i).getAmount());
+        }
+        itemsMenuTextView.setText(String.valueOf(amount));
+        timeMenuTextView.setText(String.valueOf(time));
+        priceMenuTextView.setText(String.valueOf(price));
+
 
         String text = "menu09.json";
         byte[] buffer = null;
@@ -79,9 +105,9 @@ public class MenuFragment extends Fragment {
 
         posts = new ArrayList<>();
 
-        Gson gson = new Gson();
-        Type listType = new TypeToken<List<MenuModel>>(){}.getType();
-        posts = gson.fromJson(str_data, listType);
+        Gson gson2 = new Gson();
+        Type listType2 = new TypeToken<List<MenuModel>>(){}.getType();
+        posts = gson2.fromJson(str_data, listType2);
 
 
 
@@ -116,6 +142,7 @@ public class MenuFragment extends Fragment {
                 Log.d(MainActivity.TAG, "onClick position = " + position);
                 Bundle bundle1 = new Bundle();
                 bundle1.putInt("bundle_size", posts.get(position).getFoods().size());
+                bundle1.putString("category", posts.get(position).getName());
                 for (int i = 0; i < posts.get(position).getFoods().size(); i++) {
                     bundle1.putString("name" + i, posts.get(position).getFoods().get(i).getName());
                     bundle1.putString("description" + i, posts.get(position).getFoods().get(i).getDescription());

@@ -4,8 +4,8 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/paper01"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -13,30 +13,85 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/myColor1"
-        android:paddingBottom="10dp"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:paddingBottom="10dp">
 
         <TextView
-            android:id="@+id/fragTextView"
-            android:text="Ваш заказ:"
-            android:layout_width="wrap_content"
+            android:id="@+id/goToOrderTextView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Перейти к заказу"
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp" />
 
 
-        <TextView
-            android:id="@+id/numberFragTextView"
-            android:text="text"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="18sp" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:id="@+id/iv1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:paddingRight="5dp"
+                android:src="@drawable/list01" />
+
+            <TextView
+                android:id="@+id/itemsMenuTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="20dp"
+                android:text="text"
+                android:layout_gravity="center_vertical"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/iv2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:paddingRight="5dp"
+                android:src="@drawable/clock01" />
+
+            <TextView
+                android:id="@+id/timeMenuTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="20dp"
+                android:text="text"
+                android:layout_gravity="center_vertical"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/iv3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:paddingRight="5dp"
+                android:src="@drawable/money01" />
+
+            <TextView
+                android:id="@+id/priceMenuTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="text"
+                android:layout_gravity="center_vertical"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:paddingTop="10dp" />
 </LinearLayout>

@@ -52,8 +52,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
 
         holder.nameMenuTextView.setText(posts.get(position).getName());
-        holder.numberMenuTextView.setText(String.valueOf(posts.get(position).getFoods().size()));
-        holder.menuImageView.setImageDrawable(context1.getDrawable(R.drawable.salad02));
+        //holder.numberMenuTextView.setText(String.valueOf(posts.get(position).getFoods().size()));
+        //holder.menuImageView.setImageDrawable(context1.getDrawable(R.drawable.salad02));
 
     }
 
@@ -67,13 +67,13 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView nameMenuTextView;
         TextView numberMenuTextView;
-        ImageView menuImageView;
+        //ImageView menuImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             nameMenuTextView = itemView.findViewById(R.id.nameMenuTextView);
             numberMenuTextView = itemView.findViewById(R.id.numberMenuTextView);
-            menuImageView = itemView.findViewById(R.id.menuImageView);
+            //menuImageView = itemView.findViewById(R.id.menuImageView);
         }
     }
 }

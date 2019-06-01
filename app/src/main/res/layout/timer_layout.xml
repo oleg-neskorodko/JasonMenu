@@ -8,18 +8,38 @@
     android:background="@drawable/paper01"
     tools:context=".MainActivity">
 
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="20dp">
+
+
     <TextView
-        android:id="@+id/headerFoodsTextView"
+        android:id="@+id/textTimerTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="28sp"
         android:textColor="@color/myGreen1"
         android:gravity="center_horizontal"
+        android:text="@string/remaining_time" />
+
+    <TextView
+        android:id="@+id/timeTimerTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="56sp"
+        android:textColor="@color/myGreen1"
+        android:gravity="center_horizontal"
         android:text="TextView" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:paddingTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+
+
 </LinearLayout>

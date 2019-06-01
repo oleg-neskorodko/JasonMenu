@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Donna Olivia</string>
     <string name="menu_date">Меню на\u0020</string>
+    <string name="confirm">Отправить заказ</string>
+    <string name="clear">Очистить</string>
+    <string name="remaining_time">Оставшееся время ожидания:</string>
 
 </resources>
