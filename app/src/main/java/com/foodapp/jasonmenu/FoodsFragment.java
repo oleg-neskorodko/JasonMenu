@@ -29,7 +29,7 @@ public class FoodsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_layout, null);
+        View v = inflater.inflate(R.layout.menu_layout, null);
         Log.d(MainActivity.TAG, "FoodsFragment onCreateView");
 
         recyclerView = v.findViewById(R.id.recycler_view);
@@ -85,16 +85,20 @@ public class FoodsFragment extends Fragment {
 
         SharedPreferences sPref = getActivity().getSharedPreferences("Order", getActivity().MODE_PRIVATE);
         SharedPreferences.Editor ed = sPref.edit();
-        int orderSize = 0;
-
+        int orderSize = sPref.getInt("order_size", 0);
+        Log.d(MainActivity.TAG, "amountOrdered.size() = " + amountOrdered.size());
         for (int i = 0; i < amountOrdered.size(); i++) {
             if (amountOrdered.get(i) != 0) {
-                ed.putInt("meal" + bundle.getInt("id" + i), amountOrdered.get(i));
+                Log.d(MainActivity.TAG, "putting = " + bundle.getInt("id" + i) + " = " + amountOrdered.get(i));
+                ed.putInt("food_id" + (i + orderSize), bundle.getInt("id" + i));
+                ed.putInt("food_amount" + (i + orderSize), amountOrdered.get(i));
                 orderSize++;
+                Log.d(MainActivity.TAG, "orderSize = " + orderSize);
             }
         }
         ed.putInt("order_size", sPref.getInt("order_size", 0) + orderSize);
         ed.commit();
+        Log.d(MainActivity.TAG, "orderSize SP = " + orderSize);
     }
 
     private class SpaceItemDecoration extends RecyclerView.ItemDecoration {

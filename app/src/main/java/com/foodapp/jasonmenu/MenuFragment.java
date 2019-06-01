@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -30,6 +31,9 @@ public class MenuFragment extends Fragment {
     private MenuAdapter adapter;
     private ItemClickListener listener;
     private List<MenuModel> posts;
+    private TextView numberFragTextView;
+    private LinearLayout orderLayout;
+
 
 
     public void setListener(ItemClickListener listener) {
@@ -41,10 +45,20 @@ public class MenuFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View v = inflater.inflate(R.layout.fragment_layout, null);
+        View v = inflater.inflate(R.layout.menu_layout, null);
         Log.d(MainActivity.TAG, "fragment1 onCreateView");
 
-        TextView numberFragTextView = v.findViewById(R.id.numberFragTextView);
+
+        orderLayout = v.findViewById(R.id.orderLayout);
+        orderLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onOrderClick();
+            }
+        });
+
+
+        numberFragTextView = v.findViewById(R.id.numberFragTextView);
         SharedPreferences sPref = getActivity().getSharedPreferences("sPref", getActivity().MODE_PRIVATE);
         numberFragTextView.setText(String.valueOf(sPref.getInt("order_size", 0)));
 
@@ -68,6 +82,23 @@ public class MenuFragment extends Fragment {
         Gson gson = new Gson();
         Type listType = new TypeToken<List<MenuModel>>(){}.getType();
         posts = gson.fromJson(str_data, listType);
+
+
+
+
+
+        Log.d(MainActivity.TAG, "posts.size() = " + posts.size());
+        ArrayList<Food> menu = new ArrayList<>();
+        for (int i = 0; i < posts.size(); i++) {
+            for (int j = 0; j < posts.get(i).getFoods().size(); j++) {
+                Log.d(MainActivity.TAG, "adding = " + posts.get(i).getFoods().size());
+                menu.add(i, posts.get(i).getFoods().get(j));
+            }
+            Log.d(MainActivity.TAG, "added = " + posts.get(i).getFoods().size());
+        }
+        Log.d(MainActivity.TAG, "total added = " + menu.size());
+
+        menu.get(2).getId();
 
         layoutManager = new LinearLayoutManager(getActivity());
         adapter = new MenuAdapter(getActivity(), posts);

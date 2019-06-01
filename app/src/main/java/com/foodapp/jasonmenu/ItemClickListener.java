@@ -4,4 +4,5 @@ import android.os.Bundle;
 
 public interface ItemClickListener {
     void onItemClick(Bundle bundle);
+    void onOrderClick();
 }

@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         super.onCreate(savedInstanceState);
         Log.d(TAG, "MainActivity onCreate");
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
 
         Log.d(TAG, "MainActivity setContentView");
 
@@ -37,5 +36,13 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         foodsFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, foodsFragment, "foodsFragment").addToBackStack("mainStack").commit();
+    }
+
+    @Override
+    public void onOrderClick() {
+        Log.d(TAG, "MainActivity onOrderClick");
+        OrderFragment orderFragment = new OrderFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, orderFragment, "orderFragment").addToBackStack("mainStack").commit();
     }
 }
