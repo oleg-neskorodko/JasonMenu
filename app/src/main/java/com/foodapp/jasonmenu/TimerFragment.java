@@ -1,7 +1,6 @@
 package com.foodapp.jasonmenu;
 
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -13,13 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 
 public class TimerFragment extends Fragment {
 
     private TextView timeTimerTextView;
-    private SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm:ss");
+    //private SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm:ss");
     private int time;
     private int seconds;
     private ItemClickListener listener;
@@ -100,9 +98,7 @@ public class TimerFragment extends Fragment {
                 }
             }
         });
-
         thread1.start();
-
     }
 
     @Override

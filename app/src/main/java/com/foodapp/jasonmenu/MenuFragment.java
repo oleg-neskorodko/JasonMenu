@@ -50,8 +50,7 @@ public class MenuFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View v = inflater.inflate(R.layout.menu_layout, null);
-        Log.d(MainActivity.TAG, "fragment1 onCreateView");
-
+        Log.d(MainActivity.TAG, "MenuFragment onCreateView");
 
         orderLayout = v.findViewById(R.id.orderLayout);
         itemsMenuTextView = v.findViewById(R.id.itemsMenuTextView);
@@ -63,7 +62,6 @@ public class MenuFragment extends Fragment {
                 listener.onOrderClick();
             }
         });
-
 
         sPref = getActivity().getSharedPreferences("Order", getActivity().MODE_PRIVATE);
         totalList = new ArrayList<>();
@@ -87,7 +85,6 @@ public class MenuFragment extends Fragment {
         timeMenuTextView.setText(String.valueOf(time));
         priceMenuTextView.setText(String.valueOf(price));
 
-
         String text = "menu09.json";
         byte[] buffer = null;
         InputStream is;
@@ -102,29 +99,10 @@ public class MenuFragment extends Fragment {
         }
 
         String str_data = new String(buffer);
-
         posts = new ArrayList<>();
-
         Gson gson2 = new Gson();
         Type listType2 = new TypeToken<List<MenuModel>>(){}.getType();
         posts = gson2.fromJson(str_data, listType2);
-
-
-
-
-
-        Log.d(MainActivity.TAG, "posts.size() = " + posts.size());
-        ArrayList<Food> menu = new ArrayList<>();
-        for (int i = 0; i < posts.size(); i++) {
-            for (int j = 0; j < posts.get(i).getFoods().size(); j++) {
-                Log.d(MainActivity.TAG, "adding = " + posts.get(i).getFoods().size());
-                menu.add(i, posts.get(i).getFoods().get(j));
-            }
-            Log.d(MainActivity.TAG, "added = " + posts.get(i).getFoods().size());
-        }
-        Log.d(MainActivity.TAG, "total added = " + menu.size());
-
-        menu.get(2).getId();
 
         layoutManager = new LinearLayoutManager(getActivity());
         adapter = new MenuAdapter(getActivity(), posts);
@@ -155,7 +133,6 @@ public class MenuFragment extends Fragment {
                 listener.onItemClick(bundle1);
             }
         });
-        Log.d(MainActivity.TAG, "fragment1 onCreateView end");
         return v;
     }
 

@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -35,7 +34,6 @@ public class FoodsFragment extends Fragment {
     private ArrayList<OrderModel> totalList;
     private Map<Integer, OrderModel> orderedMap;
     private SharedPreferences sPref;
-    //private SharedPreferences sPref;
 
 
     @Nullable
@@ -49,8 +47,6 @@ public class FoodsFragment extends Fragment {
         headerFoodsTextView = v.findViewById(R.id.headerFoodsTextView);
         orderedMap = new HashMap<>();
 
-
-
         sPref = getActivity().getSharedPreferences("Order", getActivity().MODE_PRIVATE);
         totalList = new ArrayList<>();
         Gson gson = new Gson();
@@ -58,7 +54,6 @@ public class FoodsFragment extends Fragment {
         Log.d(MainActivity.TAG, "input = " + sPref.getString("order", "[]"));
         totalList = gson.fromJson(sPref.getString("order", "[]"), listType);
 
-        //Log.d(MainActivity.TAG, "total = " + totalList.get(2).getAmount() + totalList.get(0).getName());
 
 
 
@@ -66,8 +61,6 @@ public class FoodsFragment extends Fragment {
         bundle = this.getArguments();
         orderList = new ArrayList<>();
         if (bundle != null) {
-            Log.d(MainActivity.TAG, "FoodsFragment bundle NOT NULL");
-
             headerFoodsTextView.setText(bundle.getString("category"));
 
             for (int i = 0; i < bundle.getInt("bundle_size"); i++) {
@@ -81,31 +74,17 @@ public class FoodsFragment extends Fragment {
                         0);
             }
 
-            Log.d(MainActivity.TAG, "order = " + orderList.get(0).getAmount());
-
-
-
-            int replaced = 0;
             for (int i = 0; i < totalList.size(); i++) {
                 for (int j = 0; j < orderList.size(); j++) {
-                    Log.d(MainActivity.TAG, "i = " + i + "j = " + j + "ids = " + totalList.get(i).getId() + " " + orderList.get(j).getId());
                     if (totalList.get(i).getId().equals(orderList.get(j).getId())) {
-                        Log.d(MainActivity.TAG, "here");
                         orderList.get(j).setAmount(totalList.get(i).getAmount());
-                        replaced++;
                     }
                 }
             }
 
-            Log.d(MainActivity.TAG, "replaced = " + replaced);
-
-
             for (int i = 0; i < orderList.size(); i++) {
                 orderedMap.put(orderList.get(i).getId(), orderList.get(i));
             }
-
-            //Log.d(MainActivity.TAG, "total = " + totalList.get(2).getAmount() + totalList.get(2).getName());
-            //Log.d(MainActivity.TAG, "order = " + orderList.get(0).getAmount());
 
             layoutManager = new LinearLayoutManager(getActivity());
             adapter = new FoodsAdapter(new ButtonClickListener() {
@@ -116,7 +95,6 @@ public class FoodsFragment extends Fragment {
                         case R.id.plusButton:
                             if (orderedMap.containsKey(orderModel.getId())) {
                                 orderModel.setAmount(orderModel.getAmount() + 1);
-                                //orderedMap.get(orderModel.getId()).setAmount(orderModel.getAmount() + 1);
                             } else {
                                 orderModel.setAmount(1);
                                 orderedMap.put(orderModel.getId(), orderModel);
@@ -126,12 +104,13 @@ public class FoodsFragment extends Fragment {
                             break;
                         case R.id.minusButton:
                             if (orderedMap.containsKey(orderModel.getId())) {
-                                orderModel.setAmount(orderModel.getAmount() - 1);
-                                //orderedMap.get(orderModel.getId()).setAmount(orderModel.getAmount() - 1);
-                                if (orderedMap.get(orderModel.getId()).getAmount() == 0)
-                                    orderedMap.remove(orderModel.getId());
-                            }
+                                if (orderModel.getAmount() > 0) {
+                                    orderModel.setAmount(orderModel.getAmount() - 1);
+                                    if (orderedMap.get(orderModel.getId()).getAmount() == 0)
+                                        orderedMap.remove(orderModel.getId());
+                                }
 
+                            }
                             recyclerView.getAdapter().notifyDataSetChanged();
                             break;
 
@@ -145,8 +124,7 @@ public class FoodsFragment extends Fragment {
             recyclerView.addItemDecoration(new SpaceItemDecoration(Constants.RECYCLER_SPACE));
 
 
-        } else Log.d(MainActivity.TAG, "FoodsFragment bundle NULL");
-
+        }
         return v;
     }
 
@@ -164,7 +142,6 @@ public class FoodsFragment extends Fragment {
         super.onStop();
 
         Log.d(MainActivity.TAG, "ordered amount = " + orderList.get(0).getAmount());
-        int replaced = 0;
         for (int j = 0; j < orderList.size(); j++) {
             if (orderList.get(j).getAmount() > 0) {
                 if (totalList.size() > 0) {
@@ -192,7 +169,6 @@ public class FoodsFragment extends Fragment {
                 }
             }
         }
-        Log.d(MainActivity.TAG, "replaced = " + replaced);
         Map<Integer, OrderModel> totalMap = new HashMap<>();
         for (int i = 0; i < totalList.size(); i++) {
             totalMap.put(totalList.get(i).getId(), totalList.get(i));

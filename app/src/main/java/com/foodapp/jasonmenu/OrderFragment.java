@@ -60,11 +60,7 @@ public class OrderFragment extends Fragment {
         confirmOrderButton = v.findViewById(R.id.confirmOrderButton);
         clearOrderButton = v.findViewById(R.id.clearOrderButton);
 
-
-
-
         layoutManager = new LinearLayoutManager(getActivity());
-
 
         sPref = getActivity().getSharedPreferences("Order", getActivity().MODE_PRIVATE);
         totalList = new ArrayList<>();
@@ -74,8 +70,6 @@ public class OrderFragment extends Fragment {
         totalList = gson.fromJson(sPref.getString("order", "[]"), listType);
 
         countVariables();
-
-
 
             adapter = new OrderAdapter(new ButtonClickListener() {
 
@@ -130,8 +124,6 @@ public class OrderFragment extends Fragment {
                 priceOrderTextView.setText(String.valueOf(price = 0));
             }
         });
-
-
         return v;
     }
 

@@ -28,7 +28,7 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> 
     @Override
     public FoodsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        Log.d(MainActivity.TAG, "onCreateViewHolder post size = " + getItemCount());
+        //Log.d(MainActivity.TAG, "onCreateViewHolder post size = " + getItemCount());
 
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_foods,
@@ -41,7 +41,7 @@ public class FoodsAdapter extends RecyclerView.Adapter<FoodsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(FoodsAdapter.ViewHolder holder, final int position) {
-        Log.d(MainActivity.TAG, "FoodsAdapter onBindViewHolder = " + getItemCount());
+        //Log.d(MainActivity.TAG, "FoodsAdapter onBindViewHolder = " + getItemCount());
 
         holder.nameFoodsTextView.setText(orderList.get(position).getName());
         holder.descriptionTextView.setText(orderList.get(position).getDescription());

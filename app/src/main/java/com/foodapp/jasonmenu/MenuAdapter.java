@@ -29,7 +29,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     @Override
     public MenuAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        Log.d(MainActivity.TAG, "onCreateViewHolder post size = " + getItemCount());
+        //Log.d(MainActivity.TAG, "onCreateViewHolder post size = " + getItemCount());
 
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_menu,
@@ -47,7 +47,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(MenuAdapter.ViewHolder holder, int position) {
-        Log.d(MainActivity.TAG, "onBindViewHolder post size = " + getItemCount());
+        //Log.d(MainActivity.TAG, "onBindViewHolder post size = " + getItemCount());
 
 
 
@@ -66,13 +66,13 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView nameMenuTextView;
-        TextView numberMenuTextView;
+        //TextView numberMenuTextView;
         //ImageView menuImageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             nameMenuTextView = itemView.findViewById(R.id.nameMenuTextView);
-            numberMenuTextView = itemView.findViewById(R.id.numberMenuTextView);
+            //numberMenuTextView = itemView.findViewById(R.id.numberMenuTextView);
             //menuImageView = itemView.findViewById(R.id.menuImageView);
         }
     }
