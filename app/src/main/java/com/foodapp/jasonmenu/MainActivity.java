@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements ItemClickListener{
 
@@ -20,8 +19,6 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         super.onCreate(savedInstanceState);
         Log.d(TAG, "MainActivity onCreate");
         setContentView(R.layout.activity_main);
-
-        Log.d(TAG, "MainActivity setContentView");
 
         menuFragment = new MenuFragment();
         menuFragment.setListener(this);
@@ -77,4 +74,13 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
                 .replace(R.id.content_frame, menuFragment, "menu_fragment").addToBackStack("main_stack").commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.d(TAG, "MainActivity onBackPressed");
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        if (fm.getBackStackEntryCount() == 0) {
+            finish();
+        }
+    }
 }
