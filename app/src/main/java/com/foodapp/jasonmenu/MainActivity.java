@@ -68,10 +68,9 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         SharedPreferences.Editor ed = sPref.edit();
         ed.putString("order", "[]");
         ed.commit();
-        menuFragment = new MenuFragment();
-        menuFragment.setListener(this);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, menuFragment, "menu_fragment").addToBackStack("main_stack").commit();
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        fm.popBackStack();
+        fm.popBackStack();
     }
 
     @Override
