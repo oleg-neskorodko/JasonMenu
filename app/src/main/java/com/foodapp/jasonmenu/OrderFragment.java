@@ -87,6 +87,7 @@ public class OrderFragment extends Fragment {
                             if (totalList.get(position).getAmount() != 0) {
                                 totalList.get(position).setAmount(totalList.get(position).getAmount() - 1);
                                 recyclerView.getAdapter().notifyDataSetChanged();
+                                countVariables();
                             }
                             break;
 
